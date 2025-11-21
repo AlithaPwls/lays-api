@@ -40,7 +40,21 @@ export const updateDesign = async (req, res) => {
             return res.status(404).json({ error: "Design not found" });
         }
         res.status(200).json(updatedDesign);
-        
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+//DELETE: een design verwijderen
+export const deletedDesign = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedDesign = await Design.findByIdAndDelete(id);
+        if (!deletedDesign) {
+            return res.status(404).json({ error: "Design not found" });
+        }
+        res.status(200).json({ message: "Design deleted successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
