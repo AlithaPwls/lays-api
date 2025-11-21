@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-dotenv.config();
+dotenv.config(); //voor lezen van .env bestand
 
 const app = express();
 app.use(cors());
@@ -22,7 +22,7 @@ mongoose
 // TEST ROUTE
 
 app.get("/", (req, res) => {
-  res.send("API is running");
+  res.send("API is WOOOOOORKIIIIINGGGGGGG");
 });
 
 //echte route
