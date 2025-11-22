@@ -1,35 +1,31 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import designRoutes from "./routes/design.js";
+import authRoutes from "./routes/auth.js";
+import adminRoutes from "./routes/admin.js";
 import mongoose from "mongoose";
 
-dotenv.config(); //voor lezen van .env bestand
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-//import routes
-import designRouter from "./routes/design.js";
+app.use("/designs", designRoutes);
+app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 
 
-// MONGO CONNECTIE
-mongoose
-  .connect(process.env.DATABASE_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+const PORT = 3000;
 
-// TEST ROUTE
-
-app.get("/", (req, res) => {
-  res.send("API is WOOOOOORKIIIIINGGGGGGG");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
-//echte route
-app.use("/designs", designRouter);
 
-
-
-app.listen(process.env.PORT || 3000, () =>
-  console.log(`Server running on port ${process.env.PORT}`)
-);

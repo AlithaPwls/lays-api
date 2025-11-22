@@ -1,20 +1,18 @@
 import express from "express";
-import { createDesign, getAllDesigns, updateDesign, deletedDesign } from "../controllers/designsControllers.js";
+import { 
+  getAllDesigns,
+  createDesign,
+  updateDesign,
+  deleteDesign
+} from "../controllers/designsControllers.js";
 
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-//GET: om alle designs op te halen
 router.get("/", getAllDesigns);
-
-//POST: om een nieuw design aan te maken
-router.post("/", createDesign);
-
-//PUT: om een bestaand design aan te passen
-router.put("/:id", updateDesign);
-
-//DELETE: om een design te verwijderen
-router.delete("/:id", deletedDesign);
-
+router.post("/", authMiddleware, createDesign);
+router.put("/:id", authMiddleware, updateDesign);
+router.delete("/:id", authMiddleware, deleteDesign);
 
 export default router;

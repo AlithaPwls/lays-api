@@ -1,14 +1,20 @@
 import mongoose from "mongoose";
 
-//structuur of templateje voor een zak design
 const designSchema = new mongoose.Schema({
-    color: { type: String, required: true },
-    bagImage: { type: String, required: true },
-    name: { type: String, required: true },
-    font: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+
+    backgroundColor: { type: String, required: true },
+    bagColor: { type: String, required: true },
+
+    title: { type: String, required: true },
+    titleFont: { type: String, required: true },
+
     flavors: { type: [String], required: true },
-});
 
-const Design = mongoose.model("Design", designSchema); //maakt nieuwe collectie genaamds designs met per design de eigenschappen vanuit designschema
+    smallImageUrl: { type: String },
 
-export default Design;
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+
+}, { timestamps: true });
+
+export default mongoose.model("Design", designSchema);
