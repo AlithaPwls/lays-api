@@ -41,9 +41,9 @@ export const deleteDesign = async (req, res) => {
     const design = await Design.findById(id);
     if (!design) return res.status(404).json({ error: "Design not found" });
 
-    if (design.userId.toString() !== req.user.userId)
+    if (design.userId.toString() !== req.user.userId && !req.user.isAdmin)
         return res.status(403).json({ error: "Not authorized to delete this design" });
-
+    
     await design.remove();
     res.json({ message: "Design deleted" });
 };
