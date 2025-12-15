@@ -5,19 +5,23 @@ import cors from 'cors'
 import flavorRoutes from './routes/flavorRoutes.js'
 import colorRoutes from './routes/colorRoutes.js'
 import fontRoutes from './routes/fontRoutes.js'
+import designRoutes from './routes/designRoutes.js'
 
 
 
 dotenv.config()
-
 const app = express()
+app.use(express.json())
+
+
 app.use(cors({origin: 'http://localhost:5173'}))
 const PORT = process.env.PORT || 3000
 
-app.use(express.json())
+
 app.use('/flavors', flavorRoutes)
 app.use('/colors', colorRoutes)
 app.use('/fonts', fontRoutes)
+app.use('/designs', designRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI)
