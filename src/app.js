@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import flavorRoutes from './routes/flavorRoutes.js'
 import colorRoutes from './routes/colorRoutes.js'
 import fontRoutes from './routes/fontRoutes.js'
@@ -10,6 +11,7 @@ import fontRoutes from './routes/fontRoutes.js'
 dotenv.config()
 
 const app = express()
+app.use(cors({origin: 'http://localhost:5173'}))
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
