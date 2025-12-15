@@ -3,22 +3,31 @@ import Design from './models/Design.js'
 
 const router = express.Router()
 
-// POST /designs
+// GET /designs  → alle designs ophalen
+router.get('/', async (req, res) => {
+  try {
+    const designs = await Design.find().sort({ createdAt: -1 })
+    res.json(designs)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// POST /designs → nieuw design opslaan
 router.post('/', async (req, res) => {
-    try {
-      console.log('BODY RECEIVED:', req.body) // 🔍 DEBUG
-  
-      const design = new Design({
-        title: req.body.title,
-        color: req.body.color,
-        font: req.body.font
-      })
-  
-      await design.save()
-      res.status(201).json(design)
-    } catch (error) {
-      res.status(500).json({ message: error.message })
-    }
-  })
+  try {
+    const design = new Design({
+      title: req.body.title,
+      color: req.body.color,
+      font: req.body.font,
+      image: req.body.image
+    })
+
+    await design.save()
+    res.status(201).json(design)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
 
 export default router
