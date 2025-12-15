@@ -1,0 +1,1 @@
+start api by typing "npm run dev" in terminal
