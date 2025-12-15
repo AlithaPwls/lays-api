@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import flavorRoutes from './routes/flavorRoutes.js'
 import colorRoutes from './routes/colorRoutes.js'
+import fontRoutes from './routes/fontRoutes.js'
 
 
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use('/flavors', flavorRoutes)
 app.use('/colors', colorRoutes)
+app.use('/fonts', fontRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI)
