@@ -1,5 +1,5 @@
 import express from 'express'
-import Color from '../models/Color.js'
+import Color from './models/Color.js'
 
 const router = express.Router()
 
