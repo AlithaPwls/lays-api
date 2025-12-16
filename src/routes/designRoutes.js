@@ -5,14 +5,16 @@ import authMiddleware from '../middleware/authMiddleware.js'
 const router = express.Router()
 
 // GET /designs  → alle designs ophalen
-router.get('/', async (req, res) => {
-  try {
-    const designs = await Design.find().sort({ createdAt: -1 })
-    res.json(designs)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-})
+router.get('/', authMiddleware, async (req, res) => {
+    try {
+      const designs = await Design.find({ userId: req.userId })
+        .sort({ createdAt: -1 })
+  
+      res.json(designs)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  })
 
 // POST /designs → nieuw design opslaan
 router.post('/', authMiddleware, async (req, res) => {
