@@ -6,6 +6,7 @@ import flavorRoutes from './routes/flavorRoutes.js'
 import colorRoutes from './routes/colorRoutes.js'
 import fontRoutes from './routes/fontRoutes.js'
 import designRoutes from './routes/designRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 
 
@@ -22,6 +23,7 @@ app.use('/flavors', flavorRoutes)
 app.use('/colors', colorRoutes)
 app.use('/fonts', fontRoutes)
 app.use('/designs', designRoutes)
+app.use('/auth', authRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI)
