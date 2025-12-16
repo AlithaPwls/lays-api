@@ -23,6 +23,35 @@ router.post('/', authMiddleware, async (req, res) => {
   res.status(201).json(design)
 })
 
+router.post('/:id/like', authMiddleware, async (req, res) => {
+    try {
+      const design = await Design.findById(req.params.id)
+  
+      if (!design) {
+        return res.status(404).json({ message: 'Design not found' })
+      }
+  
+      // ❌ eigen design liken
+      if (design.userId.toString() === req.user._id.toString()) {
+        return res.status(403).json({ message: 'Cannot like your own design' })
+      }
+  
+      // ❌ al geliked
+      if (design.likes.includes(req.user._id)) {
+        return res.status(400).json({ message: 'Already liked' })
+      }
+  
+      design.likes.push(req.user._id)
+      await design.save()
+  
+      res.json({
+        likes: design.likes.length
+      })
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  })
+
 router.delete('/:id', authMiddleware, async (req, res) => {
   if (!req.user.isAdmin) {
     return res.status(403).json({ message: 'Admin only' })

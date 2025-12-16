@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { ref } from 'vue'
 
 const designSchema = new mongoose.Schema(
   {
@@ -10,7 +11,11 @@ const designSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
-    }
+    },
+    likes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }]
   },
   { timestamps: true }
 )
