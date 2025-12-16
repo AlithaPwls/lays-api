@@ -1,5 +1,6 @@
 import express from 'express'
 import Design from './models/Design.js'
+import authMiddleware from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
@@ -14,20 +15,21 @@ router.get('/', async (req, res) => {
 })
 
 // POST /designs → nieuw design opslaan
-router.post('/', async (req, res) => {
-  try {
-    const design = new Design({
-      title: req.body.title,
-      color: req.body.color,
-      font: req.body.font,
-      image: req.body.image
-    })
-
-    await design.save()
-    res.status(201).json(design)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-})
+router.post('/', authMiddleware, async (req, res) => {
+    try {
+      const design = new Design({
+        title: req.body.title,
+        color: req.body.color,
+        font: req.body.font,
+        image: req.body.image,
+        userId: req.userId
+      })
+  
+      await design.save()
+      res.status(201).json(design)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  })
 
 export default router
