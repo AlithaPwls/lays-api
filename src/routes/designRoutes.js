@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/', async (req, res) => {
   const designs = await Design.find()
-  .populate('userId', 'email')
+  .populate('userId', 'firstname lastname')
   .sort({ createdAt: -1 })
   res.json(designs)
 })
