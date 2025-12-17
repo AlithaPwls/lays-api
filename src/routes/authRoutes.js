@@ -36,8 +36,23 @@ router.post('/register', async (req, res) => {
 
     await user.save()
 
+    // 🔐 TOKEN AANMAKEN (BELANGRIJK)
+    const token = jwt.sign(
+      { userId: user._id, isAdmin: user.isAdmin },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    )
+
+    // ✅ ZELFDE STRUCTUUR ALS LOGIN
     res.status(201).json({
-      message: 'User created'
+      token,
+      user: {
+        id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        isAdmin: user.isAdmin
+      }
     })
   } catch (error) {
     res.status(500).json({ message: error.message })
