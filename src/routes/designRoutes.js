@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
 router.post('/', authMiddleware, async (req, res) => {
   const design = new Design({
     title: req.body.title,
+    flavor: req.body.flavor,
     color: req.body.color,
     font: req.body.font,
     image: req.body.image,

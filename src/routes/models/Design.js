@@ -4,6 +4,7 @@ import { ref } from 'vue'
 const designSchema = new mongoose.Schema(
   {
     title: String,
+    flavor: String,
     color: String,
     font: String,
     image: String,
