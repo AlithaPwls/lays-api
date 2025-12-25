@@ -109,4 +109,16 @@ router.delete('/users/:id', authMiddleware, adminMiddleware, async (req, res) =>
     }
   })
 
+  // GET ALL USERS (ADMIN ONLY)
+router.get('/users', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const users = await User.find().select('-password')
+    res.json(users)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+
+
 export default router
